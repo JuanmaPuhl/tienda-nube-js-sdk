@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "build", 
+        "target": "esnext", 
+        "module": "commonjs", 
+        "noImplicitAny": true, 
+        "rootDir": "src",
+        "resolveJsonModule":true,
+        "lib": ["es6","dom"],
+        "declaration": true
+    },
+    "include": ["src/**/*.ts"], 
+    "exclude": ["node_modules", "build"], 
+  }

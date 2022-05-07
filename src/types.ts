@@ -1,7 +1,9 @@
 import {
   Category,
   Channels,
+  Customer,
   Image,
+  Order,
   OrderStatus,
   PaymentStatus,
   Product,
@@ -222,4 +224,106 @@ export type GetOrderByIdParameters = {
   params?: {
     fields?: string
   }
+}
+
+export type CreateOrderParameters = {
+  params: {
+    currency?: string
+    language?: string
+    gateway: PaymentGateway
+    payment_status?: PaymentStatus | "abandoned"
+    status?: OrderStatus
+    fulfillment_status?: ShippingStatus
+    products: OrderProduct[]
+    total?: number
+    inventory_behavior?: InventoryBehavior
+    customer: OrderCustomer
+    note?: string
+    billing_addres: Address
+    shipping_address: ShippingAddress
+    shipping_pickup_type: ShippingType
+    shipping: ShippingMethod
+    shipping_tracking_number?: number
+    shipping_cost_customer: number
+    shipping_cost_owner?: number
+    send_confirmation_email?: boolean
+    send_fulfillment_email?: boolean
+  }
+}
+
+type PaymentGateway =
+  | "offline"
+  | "mercadopago"
+  | "papseguro"
+  | "cielo"
+  | "moip"
+  | "boleto_paghiper"
+  | "payu"
+  | "todopago"
+  | "not-provided"
+
+type InventoryBehavior = "bypass" | "chain"
+type ShippingType = "pickup" | "ship"
+type ShippingMethod =
+  | "branch"
+  | "correios"
+  | "correo-argentino"
+  | "oca-partner-ar"
+  | "table"
+  | "not-provided"
+
+type OrderCustomer = {
+  name: string
+  email: string
+  phone?: string
+  document?: number
+}
+
+type Address = {
+  first_name: string
+  last_name: string
+  address: string
+  number: number
+  floor?: string
+  locality?: string
+  city: string
+  province: string
+  zipcode: number
+  country: string
+  phone?: string
+}
+
+type ShippingAddress = Address & {
+  customs?: any[]
+}
+
+type OrderProduct = {
+  variant_id: string
+  quantity: number
+  price?: number
+}
+
+export type UpdateOrderParameters = {
+  orderId: string
+  params: Partial<CreateOrderParameters>
+}
+
+export type CloseOrderParameters = {
+  orderId: string
+}
+
+export type OpenOrderParameters = {
+  orderId: string
+}
+
+export type PackOrderParameters = {
+  orderId: string
+}
+
+export type FulfillOrderParameters = {
+  orderId: string
+}
+
+export type CancelOrderParameters = {
+  orderId: string
 }

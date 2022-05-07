@@ -28,6 +28,13 @@ import {
   DeleteCategoryParameters,
   GetOrdersParameters,
   GetOrderByIdParameters,
+  CreateOrderParameters,
+  UpdateOrderParameters,
+  CloseOrderParameters,
+  OpenOrderParameters,
+  PackOrderParameters,
+  FulfillOrderParameters,
+  CancelOrderParameters,
 } from "./types"
 
 export class TiendaNubeClient {
@@ -435,6 +442,110 @@ export class TiendaNubeClient {
     return new Promise((resolve, reject) => {
       this.tiendaNubeAPI
         .get<Order>(`/orders/${orderId}`, { params })
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public createOrder = ({ params }: CreateOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .post<Order>("/orders", params)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public updateOrder = ({
+    orderId,
+    params,
+  }: UpdateOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .put<Order>(`/orders/${orderId}`, params)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public closeOrder = ({ orderId }: CloseOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .post<Order>(`/orders/${orderId}/close`)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public openOrder = ({ orderId }: OpenOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .post<Order>(`/orders/${orderId}/open`)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public packOrder = ({ orderId }: PackOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .post<Order>(`/orders/${orderId}/pack`)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public fulfillOrder = ({
+    orderId,
+  }: FulfillOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .post<Order>(`/orders/${orderId}/fulfill`)
+        .then(({ data }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error) => {
+          reject(error.response.data)
+        })
+    })
+  }
+
+  public cancelOrder = ({ orderId }: CancelOrderParameters): Promise<Order> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+
+        .post<Order>(`/orders/${orderId}/cancel`)
         .then(({ data }) => {
           this.noDataReject(data, reject)
           resolve(data)

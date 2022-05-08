@@ -10,13 +10,13 @@ Currently I just deployed the js version, in the future I will deploy the @types
 First install the dependency: 
 
 ```
-npm install @juanmaPuhl/tienda-nube-js-sdk
+npm install juanmaPuhl/tienda-nube-js-sdk
 ```
 
 or
 
 ```
-yarn add @juanmaPuhl/tienda-nube-js-sdk
+yarn add juanmaPuhl/tienda-nube-js-sdk
 ```
 
 Then import it and start using it:

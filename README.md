@@ -10,19 +10,19 @@ Currently I just deployed the js version, in the future I will deploy the @types
 First install the dependency: 
 
 ```
-npm install juanmaPuhl/tienda-nube-js-sdk
+npm install tienda-nube-js-sdk
 ```
 
 or
 
 ```
-yarn add juanmaPuhl/tienda-nube-js-sdk
+yarn add tienda-nube-js-sdk
 ```
 
 Then import it and start using it:
 
 ```
-const tiendaNubeSDK = require("@juanmaPuhl/tienda-nube-js-sdk")
+const tiendaNubeSDK = require("tienda-nube-js-sdk")
 const tiendaNubeClient = new tiendaNubeSDK.TiendaNubeClient({
     accessToken: "<YOUR_ACCESS_TOKEN>",
     storeId: "<YOUR_STORE_ID>"

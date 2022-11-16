@@ -35,6 +35,7 @@ import {
   PackOrderParameters,
   FulfillOrderParameters,
   CancelOrderParameters,
+  HttpMethods,
 } from "./types"
 
 export class TiendaNubeClient {
@@ -52,6 +53,25 @@ export class TiendaNubeClient {
         description:
           "Something went wrong and we didn't receive data from server",
       })
+  }
+
+  public request = (
+    url: string,
+    method?: HttpMethods,
+    params?: any,
+    headers?: any
+  ): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      this.tiendaNubeAPI
+        .call(url, method, params, headers)
+        .then(({ data }: { data: any }) => {
+          this.noDataReject(data, reject)
+          resolve(data)
+        })
+        .catch((error: any) => {
+          reject(error.response.data)
+        })
+    })
   }
 
   public getProducts = (params?: GetProductsParameters): Promise<Product[]> => {

@@ -327,3 +327,5 @@ export type FulfillOrderParameters = {
 export type CancelOrderParameters = {
   orderId: string
 }
+
+export type HttpMethods = "GET" | "POST" | "PUT" | "DELETE"

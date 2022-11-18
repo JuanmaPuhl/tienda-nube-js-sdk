@@ -35,40 +35,50 @@ import {
   PackOrderParameters,
   FulfillOrderParameters,
   CancelOrderParameters,
-  HttpMethods,
+  RequestType,
 } from "./types"
 
 export class TiendaNubeClient {
   private tiendaNubeAPI: AxiosInstance
+  private debug: boolean
 
-  constructor({ accessToken, storeId }: TiendaNubeClientProps) {
+  constructor({ accessToken, storeId, debug = false }: TiendaNubeClientProps) {
     this.tiendaNubeAPI = createTiendaNubeAPI({ storeId, accessToken })
+    this.debug = debug
   }
 
   private noDataReject = (data: any, reject: (reason?: any) => void) => {
-    if (!data)
+    if (!data) {
+      this.log("No data")
       reject({
-        code: 500,
+        code: 503,
         message: "No data",
         description:
           "Something went wrong and we didn't receive data from server",
       })
+    }
   }
 
-  public request = (
-    url: string,
-    method?: HttpMethods,
-    params?: any,
-    headers?: any
-  ): Promise<any> => {
+  public request = ({ url, method, params }: RequestType): Promise<any> => {
+    const options = {
+      url,
+      method,
+      params,
+    }
+
+    this.log({
+      "new request": options,
+    })
+
     return new Promise((resolve, reject) => {
-      this.tiendaNubeAPI
-        .call(url, method, params, headers)
+      this.tiendaNubeAPI(options)
         .then(({ data }: { data: any }) => {
+          this.log({ "Data received": data })
           this.noDataReject(data, reject)
           resolve(data)
         })
         .catch((error: any) => {
+          this.log({ "Error received": error.response })
           reject(error.response.data)
         })
     })
@@ -574,5 +584,9 @@ export class TiendaNubeClient {
           reject(error.response.data)
         })
     })
+  }
+
+  private log = (message: any) => {
+    if (this.debug) console.log(message)
   }
 }

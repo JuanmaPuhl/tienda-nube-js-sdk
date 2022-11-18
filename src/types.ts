@@ -14,6 +14,7 @@ import {
 export type TiendaNubeClientProps = {
   accessToken: string
   storeId: string
+  debug?: boolean
 }
 
 export type GetProductsParameters = {
@@ -328,4 +329,10 @@ export type CancelOrderParameters = {
   orderId: string
 }
 
-export type HttpMethods = "GET" | "POST" | "PUT" | "DELETE"
+export type HttpMethods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
+
+export type RequestType = {
+  url: string
+  method: HttpMethods
+  params?: any
+}

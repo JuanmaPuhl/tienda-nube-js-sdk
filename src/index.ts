@@ -63,7 +63,11 @@ export class TiendaNubeClient {
     const options = {
       url,
       method,
-      params,
+      params: method === "GET" ? params : undefined,
+      data:
+        method === "POST" || method === "PATCH" || method === "PUT"
+          ? params
+          : undefined,
     }
 
     this.log({
@@ -78,7 +82,7 @@ export class TiendaNubeClient {
           resolve(data)
         })
         .catch((error: any) => {
-          this.log({ "Error received": error.response })
+          this.log({ "Error received": error.response.data })
           reject(error.response.data)
         })
     })

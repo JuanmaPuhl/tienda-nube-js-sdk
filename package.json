@@ -1,6 +1,6 @@
 {
   "name": "tienda-nube-js-sdk",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "dependencies": {
     "axios": "^0.27.2",
     "typescript": "^4.6.4"
